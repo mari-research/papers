@@ -1,51 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Research Paper Dashboard</title>
-<style>
-body { font-family: Arial, sans-serif; margin: 20px; }
-table { width: 100%; border-collapse: collapse; }
-th, td { border: 1px solid #ddd; padding: 8px; }
-th { background: #f4f4f4; }
-.status-Read { background: #d4edda; }
-.status-To\ Read { background: #f8d7da; }
-.status-Reading { background: #fff3cd; }
-</style>
+  <title>Research Paper Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { color: #333; }
+    table { border-collapse: collapse; width: 100%; margin-top: 15px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background: #f4f4f4; }
+
+    /* 🔹 Status cell colors */
+    .status-read { background: #d4edda; color: #155724; font-weight: bold; }       /* green */
+    .status-in-progress { background: #fff3cd; color: #856404; font-weight: bold; } /* yellow */
+    .status-to-do { background: #f8d7da; color: #721c24; font-weight: bold; }       /* red */
+  </style>
 </head>
 <body>
-<h1>📚 Research Papers Dashboard</h1>
-<table id="papers-table">
-<thead>
-<tr>
-<th>Title</th>
-<th>Authors</th>
-<th>Url</th>
-<th>Status</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
+  <h1>📚 Research Paper Dashboard</h1>
+  <table id="papersTable">
+    <tr>
+      <th>Title</th>
+      <th>Authors</th>
+      <th>Year</th>
+      <th>Status</th>
+      <th>Link</th>
+	  <th>Presentation</th>
+    </tr>
+  </table>
 
+  <script>
+    // 🔹 Research papers data
+    const papers = [
+      {
+        "title": "Communication-Efficient Massive UAV Online Path Control: Federated Learning ",
+        "authors": "",
+        "year": 2020,
+        "status": "Read",
+        "link": "https://arxiv.org/pdf/2003.04451"
+      },
+      {
+        "title": "Distributed Federated Learning for Ultra-Reliable Low Latency vehicular communication",
+        "authors": " ",
+        "year": 2018,
+        "status": "In Progress",
+        "link": "https://arxiv.org/pdf/1807.08127"
+      },
+      {
+        "title": "A V2X-based Privacy Preserving Federated Measuring and Learning System",
+        "authors": " ",
+        "year": 2024,
+        "status": "To Do",
+        "link": "https://arxiv.org/pdf/2401.13848"
+      }
+    ];
 
-<script>
-fetch('./research_papers.json')
-.then(response => response.json())
-.then(data => {
-const tbody = document.querySelector("#papers-table tbody");
-data.forEach(paper => {
-let row = document.createElement("tr");
-row.classList.add("status-" + paper.status.replace(" ", "\\ "));
-row.innerHTML = `
-<td><a href="${paper.link}" target="_blank">${paper.title}</a></td>
-<td>${paper.authors}</td>
-<td>${paper.url}</td>
-<td>${paper.status}</td>
-<td>${paper.notes}</td>
-`;
-tbody.appendChild(row);
-});
-});
-</script>
+   // 🔹 Populate table
+    let table = document.getElementById("papersTable");
+    papers.forEach(paper => {
+      let row = table.insertRow();
+      row.insertCell(0).innerText = paper.title;
+      row.insertCell(1).innerText = paper.authors;
+      row.insertCell(2).innerText = paper.year;
+
+      // Status cell
+      let statusCell = row.insertCell(3);
+      statusCell.innerText = paper.status;
+      statusCell.className = "status-" + paper.status.toLowerCase().replace(" ", "-");
+
+      // Paper link
+      row.insertCell(4).innerHTML = `<a href="${paper.link}" target="_blank">View Paper</a>`;
+
+      // PPT link (optional)
+      let pptCell = row.insertCell(5);
+      if (paper.ppt) {
+        pptCell.innerHTML = `<a href="${paper.ppt}" target="_blank">📑 View PPT</a>`;
+      } else {
+        pptCell.innerHTML = `<span style="color: #888;">N/A</span>`;
+      }
+    });
+  </script>
 </body>
 </html>
