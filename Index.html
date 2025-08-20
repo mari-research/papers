@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Research Paper Dashboard</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; }
+table { width: 100%; border-collapse: collapse; }
+th, td { border: 1px solid #ddd; padding: 8px; }
+th { background: #f4f4f4; }
+.status-Read { background: #d4edda; }
+.status-To\ Read { background: #f8d7da; }
+.status-Reading { background: #fff3cd; }
+</style>
+</head>
+<body>
+<h1>📚 Research Papers Dashboard</h1>
+<table id="papers-table">
+<thead>
+<tr>
+<th>Title</th>
+<th>Authors</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+
+<script>
+fetch('papers.json')
+.then(response => response.json())
+.then(data => {
+const tbody = document.querySelector("#papers-table tbody");
+data.forEach(paper => {
+let row = document.createElement("tr");
+row.classList.add("status-" + paper.status.replace(" ", "\\ "));
+row.innerHTML = `
+<td><a href="${paper.link}" target="_blank">${paper.title}</a></td>
+<td>${paper.authors}</td>
+<td>${paper.status}</td>
+<td>${paper.notes}</td>
+`;
+tbody.appendChild(row);
+});
+});
+</script>
+</body>
+</html>
