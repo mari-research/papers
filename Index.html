@@ -19,6 +19,7 @@ th { background: #f4f4f4; }
 <tr>
 <th>Title</th>
 <th>Authors</th>
+<th>Url</th>
 <th>Status</th>
 <th>Notes</th>
 </tr>
@@ -27,7 +28,7 @@ th { background: #f4f4f4; }
 </table>
 
 <script>
-fetch('papers.json')
+fetch('research_papers.json')
 .then(response => response.json())
 .then(data => {
 const tbody = document.querySelector("#papers-table tbody");
@@ -37,6 +38,7 @@ row.classList.add("status-" + paper.status.replace(" ", "\\ "));
 row.innerHTML = `
 <td><a href="${paper.link}" target="_blank">${paper.title}</a></td>
 <td>${paper.authors}</td>
+<td>${paper.url}</td>
 <td>${paper.status}</td>
 <td>${paper.notes}</td>
 `;
