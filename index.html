@@ -29,7 +29,7 @@ th { background: #f4f4f4; }
 
 
 <script>
-fetch('research_papers.json')
+fetch('./research_papers.json')
 .then(response => response.json())
 .then(data => {
 const tbody = document.querySelector("#papers-table tbody");
